@@ -494,141 +494,138 @@ class _ViewMapScreenState extends State<ViewMapScreen>
                 body: Stack(
                   children: [
                     // Map
-                    BlocBuilder<MapRouteCubit, MapRouteState>(
-                      builder: (context, mapRouteState) {
-                        return FlutterMap(
-                          mapController: _mapController,
-                          options: MapOptions(
-                            center: LatLng(
-                              widget.viewMapScreenArguments.initialPickupAddress
-                                      ?.latLng.latitude ??
-                                  22.5726,
-                              widget.viewMapScreenArguments.initialPickupAddress
-                                      ?.latLng.longitude ??
-                                  88.3639,
-                            ),
-                            zoom: 13, // 0 to 22 where 0 is whole Earth
-                          ),
-                          layers: [
-                            TileLayerOptions(
-                              urlTemplate:
-                                  "https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${Strings.mapApiKey}",
-                            ),
-                            MarkerLayerOptions(
-                              markers: [
-                                if (_pickupFocusNode.hasFocus)
-                                  Marker(
-                                    point: _mapController.center,
-                                    anchorPos: AnchorPos.align(AnchorAlign.top),
-                                    rotate: true,
-                                    builder: (context) {
-                                      return Icon(
-                                        Icons.location_history,
-                                        color: colorScheme.primary,
-                                        size: 40,
-                                      );
-                                    },
-                                  ),
-                                if (_destinationFocusNode.hasFocus)
-                                  Marker(
-                                    point: _mapController.center,
-                                    anchorPos: AnchorPos.align(AnchorAlign.top),
-                                    rotate: true,
-                                    builder: (context) {
-                                      return Icon(
-                                        Icons.location_history_rounded,
-                                        color: colorScheme.primary,
-                                        size: 40,
-                                      );
-                                    },
-                                  ),
-                                if (_pickupAddress != null &&
-                                    (_showRoute ||
-                                        rideDriverState is RideDriverGot))
-                                  Marker(
-                                    point: _pickupAddress!.latLng,
-                                    anchorPos: AnchorPos.align(AnchorAlign.top),
-                                    rotate: true,
-                                    builder: (context) {
-                                      return Icon(
-                                        Icons.location_history,
-                                        color: colorScheme.primary,
-                                        size: 40,
-                                      );
-                                    },
-                                  ),
-                                if (_destinationAddress != null && _showRoute)
-                                  Marker(
-                                    point: _destinationAddress!.latLng,
-                                    anchorPos: AnchorPos.align(AnchorAlign.top),
-                                    rotate: true,
-                                    builder: (context) {
-                                      return Icon(
-                                        Icons.location_history_rounded,
-                                        color: colorScheme.primary,
-                                        size: 40,
-                                      );
-                                    },
-                                  ),
-                                if (rideDriverState is RideDriverGot &&
-                                    !_showRoute)
-                                  Marker(
-                                    point: rideDriverState.points[0],
-                                    anchorPos: AnchorPos.align(AnchorAlign.top),
-                                    rotate: true,
-                                    builder: (context) {
-                                      return Icon(
-                                        Icons.car_repair_sharp,
-                                        color: colorScheme.primary,
-                                        size: 40,
-                                      );
-                                    },
-                                  ),
-                                if (rideState is RideActive && _showRoute)
-                                  Marker(
-                                    point: rideState.currentPosition,
-                                    anchorPos: AnchorPos.align(AnchorAlign.top),
-                                    rotate: true,
-                                    builder: (context) {
-                                      return Icon(
-                                        Icons.car_repair_sharp,
-                                        color: colorScheme.primary,
-                                        size: 40,
-                                      );
-                                    },
-                                  ),
-                              ],
-                            ),
-                            PolylineLayerOptions(
-                              polylines: [
-                                if (mapRouteState is MapRouteGot && _showRoute)
-                                  Polyline(
-                                    points: mapRouteState.points,
-                                    color: colorScheme.primary,
-                                    strokeCap: StrokeCap.round,
-                                    strokeWidth: 4,
-                                  ),
-                                if (rideDriverState is RideDriverGot &&
-                                    !_showRoute)
-                                  Polyline(
-                                    points: rideDriverState.points,
-                                    color: colorScheme.primary,
-                                    strokeCap: StrokeCap.round,
-                                    strokeWidth: 4,
-                                  ),
-                                if (rideState is RideActive && _showRoute)
-                                  Polyline(
-                                    points: rideState.routePoints,
-                                    color: colorScheme.primary,
-                                    strokeCap: StrokeCap.round,
-                                    strokeWidth: 4,
-                                  ),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                    // BlocBuilder<MapRouteCubit, MapRouteState>(
+                    //   builder: (context, mapRouteState) {
+                    //     return FlutterMap(
+                    //       mapController: _mapController,
+                    //       options: MapOptions(
+                    //         center: LatLng(
+                    //           widget.viewMapScreenArguments.initialPickupAddress
+                    //                   ?.latLng.latitude ??
+                    //               22.5726,
+                    //           widget.viewMapScreenArguments.initialPickupAddress
+                    //                   ?.latLng.longitude ??
+                    //               88.3639,
+                    //         ),
+                    //         zoom: 13, // 0 to 22 where 0 is whole Earth
+                    //       ),
+                    //       layers: [
+                    //         TileLayerOptions(
+                    //           urlTemplate:
+                    //               "https://api.tomtom.com/map/1/tile/basic/night/{z}/{x}/{y}.png?key=${Strings.mapApiKey}",
+                    //         ),
+                    //         MarkerLayerOptions(
+                    //           markers: [
+                    //             if (_pickupFocusNode.hasFocus)
+                    //               Marker(
+                    //                 point: _mapController.center,
+                    //                 anchorPos: AnchorPos.align(AnchorAlign.top),
+                    //                 rotate: true,
+                    //                 builder: (context) {
+                    //                   return Icon(
+                    //                     Icons.location_history,
+                    //                     color: colorScheme.primary,
+                    //                     size: 40,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             if (_destinationFocusNode.hasFocus)
+                    //               Marker(
+                    //                 point: _mapController.center,
+                    //                   rotate: true,
+                    //                 child:Icon(
+                    //                     Icons.location_history_rounded,
+                    //                     color: colorScheme.primary,
+                    //                     size: 40,
+                    //                   )
+                    //               ),
+                    //             if (_pickupAddress != null &&
+                    //                 (_showRoute ||
+                    //                     rideDriverState is RideDriverGot))
+                    //               Marker(
+                    //                 point: _pickupAddress!.latLng,
+                    //                 anchorPos: AnchorPos.align(AnchorAlign.top),
+                    //                 rotate: true,
+                    //                 builder: (context) {
+                    //                   return Icon(
+                    //                     Icons.location_history,
+                    //                     color: colorScheme.primary,
+                    //                     size: 40,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             if (_destinationAddress != null && _showRoute)
+                    //               Marker(
+                    //                 point: _destinationAddress!.latLng,
+                    //                 anchorPos: AnchorPos.align(AnchorAlign.top),
+                    //                 rotate: true,
+                    //                 builder: (context) {
+                    //                   return Icon(
+                    //                     Icons.location_history_rounded,
+                    //                     color: colorScheme.primary,
+                    //                     size: 40,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             if (rideDriverState is RideDriverGot &&
+                    //                 !_showRoute)
+                    //               Marker(
+                    //                 point: rideDriverState.points[0],
+                    //                 anchorPos: AnchorPos.align(AnchorAlign.top),
+                    //                 rotate: true,
+                    //                 builder: (context) {
+                    //                   return Icon(
+                    //                     Icons.car_repair_sharp,
+                    //                     color: colorScheme.primary,
+                    //                     size: 40,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             if (rideState is RideActive && _showRoute)
+                    //               Marker(
+                    //                 point: rideState.currentPosition,
+                    //                 anchorPos: AnchorPos.align(AnchorAlign.top),
+                    //                 rotate: true,
+                    //                 builder: (context) {
+                    //                   return Icon(
+                    //                     Icons.car_repair_sharp,
+                    //                     color: colorScheme.primary,
+                    //                     size: 40,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //           ],
+                    //         ),
+                    //         PolylineLayerOptions(
+                    //           polylines: [
+                    //             if (mapRouteState is MapRouteGot && _showRoute)
+                    //               Polyline(
+                    //                 points: mapRouteState.points,
+                    //                 color: colorScheme.primary,
+                    //                 strokeCap: StrokeCap.round,
+                    //                 strokeWidth: 4,
+                    //               ),
+                    //             if (rideDriverState is RideDriverGot &&
+                    //                 !_showRoute)
+                    //               Polyline(
+                    //                 points: rideDriverState.points,
+                    //                 color: colorScheme.primary,
+                    //                 strokeCap: StrokeCap.round,
+                    //                 strokeWidth: 4,
+                    //               ),
+                    //             if (rideState is RideActive && _showRoute)
+                    //               Polyline(
+                    //                 points: rideState.routePoints,
+                    //                 color: colorScheme.primary,
+                    //                 strokeCap: StrokeCap.round,
+                    //                 strokeWidth: 4,
+                    //               ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     );
+                    //   },
+                    // ),
 
                     // Input and Destiantion Picker top widget
                     SingleChildScrollView(

@@ -18,9 +18,7 @@ class SplashCubit extends Cubit<SplashState> {
     final Failure? failure = await _initSplashUsecase.call();
 
     if (failure == null) {
-      context
-          .read<UserCubit>()
-          .getCurrentUserFromLocalStorageAndEmitCurrentUser();
+      context.read<UserCubit>().getCurrentUserFromLocalStorageAndEmitCurrentUser();
     }
 
     emit(const SplashDone());
